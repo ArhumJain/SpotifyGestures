@@ -20,7 +20,7 @@ Spotify Gestures is a simple program that allows you to carry out basic function
     - With all 5 fingers up, flick index finger down to increase volume
     - Hold three fingers up (Index, Middle, Ring) to skip to previous track
     - Hold two fingers up (Index, Middle) to skip to next track
-3. Navigate to the camera window and press "x" to quit the program
+3. Navigate to the camera window and press "q" to quit the program
 
 ## Note
 - Initial run of `main.py` will taker longer as resources are setup for the first time

@@ -68,7 +68,7 @@ def main():
                 elif volume(upCount, fingersUp, spotify): pass
             
         cv2.imshow("Spotify Gestures", img)
-        if cv2.waitKey(1) == ord('x'):
+        if cv2.waitKey(1) == ord('q'):
             break
     capture.release()
     cv2.destroyAllWindows()
