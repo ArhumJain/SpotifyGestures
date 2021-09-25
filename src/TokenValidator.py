@@ -5,9 +5,6 @@ import pyppeteer
 import asyncio
 
 with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: VARS = json.load(f)
-for var in VARS.keys():
-    if VARS[var] == "":
-        raise Exception(f"Must set string value for data variable {var} in data/VARS.json")
 
 BASE_URL = "api.spotify.com"
 USER_AGENT = VARS["USER_AGENT"]
