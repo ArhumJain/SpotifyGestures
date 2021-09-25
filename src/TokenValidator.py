@@ -40,24 +40,6 @@ class TokenValidator():
         else:
             print("Error: \n" + response.content.decode("UTF-8"))
             return False
-    def sendRequestOther(self, apiCall):
-        headers = {
-            "Accept": "*/*",
-            "User-Agent": USER_AGENT,
-            "Authorization": f"Bearer {self.accessToken}",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-site"
-
-        }
-
-        response = requests.get(("https://"+"guc3-spclient.spotify.com"+apiCall), headers=headers)
-
-        if response.status_code != 401:
-            self.isAlive = True
-            return True
-        else:
-            print("Error: \n" + response.content.decode("UTF-8"))
-            return False
 
     def checkTokenValidity(self):
         return self.sendRequest("/v1/me")

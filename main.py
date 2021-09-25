@@ -1,64 +1,76 @@
 import cv2  
-import numpy as np
-import src.HandTracking as ht
+import time
+from src.HandTracking import *
 from src.Spotify import *
 from src.TokenValidator import *
-w, h = 1280, 720
-capture = cv2.VideoCapture(0)
-capture.set(3, w)
-capture.set(4, h)
 
-detector = ht.HandDetector(max_num_hands = 2, min_detection_confidence=0.75, min_tracking_confidence=.5)
-validator = TokenValidator()
-spotify = Spotify(validator)
 
-vol = 0
-volBar = 400
-volPer = 0
-area = 0
+def volume(upCount, fingersUp, spotify):
+    if upCount == 4 and fingersUp[1] == 0:
+        volume = spotify.getVolume()+10
+        print("Increasing volume to:")
+        print(volume)
+        spotify.setVolume(volume if volume <= 100 else 100)
+        return True
+    elif upCount == 4 and fingersUp[3] == 0:
+        volume = spotify.getVolume()-10
+        print("Decreasing volume to:")
+        print(volume)
+        spotify.setVolume(volume if volume >= 0 else 0)
+        return True
+    return False
 
-fingersFive = False
-def volume(img):
-    area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]) // 100        
-    if area > 150:
-        if upCount == 5 or (upCount == 4 and fingersUp[3] == 0):
-            distance, img, lineInfo = detector.findDistance(4, 8, img, draw=False)
+def playNext(upCount, fingersUp, spotify):
+    if upCount == 2 and fingersUp[1] == 1 and fingersUp[2] == 1:
+        spotify.playNext()
+        time.sleep(0.2)
+        return True
+    return False
 
-            minDist = 35
-            maxDist = 180
-            volBar = np.interp(distance, [minDist, maxDist], [400,150])
-            volPer = np.interp(distance, [minDist,maxDist], [0,100])
+def playPrevious(upCount, fingersUp, spotify):
+    if upCount == 3 and fingersUp[1] == 1 and fingersUp[2] == 1 and fingersUp[3] == 1:
+        spotify.playPrevious()
+        time.sleep(0.2)
+        return True
+    return False
 
-            increment = 10
-            volPer = increment * round(volPer/increment)
+def playPause(upCount, fingersUp, spotify):
+    if upCount == 4 and fingersUp[2] == 0:
+        spotify.playPause()
+        return True
+    return False
+
+def main():
+    w, h = 1280, 720
+    capture = cv2.VideoCapture(0)
+    capture.set(3, w)
+    capture.set(4, h)
+
+    detector = HandDetector(max_num_hands = 2, min_detection_confidence=0.75, min_tracking_confidence=.5)
+    validator = TokenValidator()
+    spotify = Spotify(validator)
+
+    area = 0
+
+    while True:
+        success, img = capture.read()
+        img = detector.findHands(img)
+        lmList, bbox = detector.findPosition(img, draw=False, bounding=True)
+        if len(lmList) != 0:
+            area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]) // 100
+            if area > 150:
+                fingersUp, upCount = detector.fingersUp()
+                if playPause(upCount, fingersUp, spotify): pass
+                elif playNext(upCount, fingersUp, spotify): pass
+                elif playPrevious(upCount, fingersUp, spotify): pass
+                elif volume(upCount, fingersUp, spotify): pass
             
-            
-            if not detector.landmarkBelow(16, 11) and upCount == 4: 
-                print(f"Setting volume to: {volPer/100}")
-                # spotify.setVolume(volPer)    
-            if distance <= 30:
-                cv2.circle(img, (75,90), 45, (0,0,255), cv2.FILLED)
-            
-            cv2.rectangle(img, (50, 150), (85, 400), (255,0,0), 3)
-            cv2.rectangle(img, (50, int(volBar)), (85, 400), (255,0,0), cv2.FILLED)
-            cv2.putText(img, f"{int(volPer)}%", (60,455), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,0), 3)
+        cv2.imshow("Image", img)
+        cv2.waitKey(1)
 
-def playNext(img):
-    if upCount == 2:
-        pass
-
-def playPause():
-    if upCount == 2 and fingersUp[0] == 1 and fingersUp[1] == 1:
-        if detector.findAngle(4,0,8) < 8:
-            spotify.playPause()
-            
-while True:
-    success, img = capture.read()
-    img = detector.findHands(img)
-    lmList, bbox = detector.findPosition(img, draw=False, bounding=True)
-    if len(lmList) != 0:
-        fingersUp, upCount = detector.fingersUp()
-        playPause()
-
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
+if __name__ == "__main__":
+    with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: VARS = json.load(f)
+    if VARS["SPOTIFY_USER"] == "" or VARS["SPOTIFY_PWD"] == "" or VARS["USER_AGENT"] == "" or VARS["SCREEN_WIDTH"] == "" or VARS["SCREEN_HEIGHT"] == "":
+        print("Please run setup.py as program data has not been initialized")
+    else:
+        main()

@@ -55,6 +55,9 @@ class Spotify():
             return True
         else:
             return False
+    def getDevices(self):
+        res = self.__sendRequest("v1/me/player/devices", "GET")
+        return res["devices"]
 
     def getVolume(self):
         res = self.__sendRequest("/v1/me/player/", "GET")
@@ -77,7 +80,7 @@ class Spotify():
         return res
 
     def playPrevious(self):
-        res = self.__sendRequest(f"/v1/me/player/next/", "POST")
+        res = self.__sendRequest(f"/v1/me/player/previous/", "POST")
         return res
 
 
