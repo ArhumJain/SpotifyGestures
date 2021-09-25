@@ -5,7 +5,10 @@ Spotify Gestures is a simple program that allows you to carry out basic function
 ## Requirements
 - Latest version of Python installed
 - Required libraries installed
-    - Run `pip install -r requirements.txt` in this directory to install required libraries
+    - Run the following command in this directory to install required libraries:
+    ```
+    pip install -r requirements.txt
+    ```
 ## Usage
 1. Run `setup.py` and set your spotify username, password, and *User Agent*
     - You can obtain your User Agent by navigating to this link in your browser and copying the User Agent: https://www.whatismyip.com/user-agent/

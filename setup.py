@@ -2,6 +2,7 @@ import tkinter
 import os
 import json
 from src.TokenValidator import *
+from screeninfo import get_monitors
 
 def main():
     path = os.path.join(os.getcwd(), "data", "VARS.json")
@@ -20,10 +21,13 @@ def main():
         
         USER_AGENT = input("Browser User Agent: ")
 
-        root = tkinter.Tk()
+        for m in get_monitors():
+            if m.is_primary:
+                SCREEN_WIDTH = m.width
+                SCREEN_HEIGHT = m.height
 
-        SCREEN_WIDTH = root.winfo_screenwidth()
-        SCREEN_HEIGHT = root.winfo_screenheight()
+        # SCREEN_WIDTH = root.winfo_screenwidth()
+        # SCREEN_HEIGHT = root.winfo_screenheight()
 
         data["SPOTIFY_USER"] = USER
         data["SPOTIFY_PWD"] = PWD
