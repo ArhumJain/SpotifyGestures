@@ -26,9 +26,6 @@ def main():
                 SCREEN_WIDTH = m.width
                 SCREEN_HEIGHT = m.height
 
-        # SCREEN_WIDTH = root.winfo_screenwidth()
-        # SCREEN_HEIGHT = root.winfo_screenheight()
-
         data["SPOTIFY_USER"] = USER
         data["SPOTIFY_PWD"] = PWD
         data["USER_AGENT"] = USER_AGENT

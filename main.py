@@ -21,7 +21,7 @@ def volume(upCount, fingersUp, spotify):
     return False
 
 def playNext(upCount, fingersUp, spotify):
-    if upCount == 2 and fingersUp[1] == 1 and fingersUp[2] == 1:
+    if upCount == 1 and fingersUp[1] == 1:
         print("Skipping to next song")
         spotify.playNext()
         time.sleep(0.2)
@@ -29,7 +29,7 @@ def playNext(upCount, fingersUp, spotify):
     return False
 
 def playPrevious(upCount, fingersUp, spotify):
-    if upCount == 3 and fingersUp[1] == 1 and fingersUp[2] == 1 and fingersUp[3] == 1:
+    if upCount == 2 and fingersUp[1] == 1 and fingersUp[2] == 1:
         print("Skipping to previous song")
         spotify.playPrevious()
         time.sleep(0.2)
@@ -48,7 +48,7 @@ def main():
     capture.set(3, w)
     capture.set(4, h)
 
-    detector = HandDetector(max_num_hands = 2, min_detection_confidence=0.75, min_tracking_confidence=.5)
+    detector = HandDetector(max_num_hands = 1, min_detection_confidence=0.75, min_tracking_confidence=.5)
     validator = TokenValidator()
     spotify = Spotify(validator)
 
@@ -62,6 +62,8 @@ def main():
             area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]) // 100
             if area > 150:
                 fingersUp, upCount = detector.fingersUp()
+                # print(fingersUp)
+                # detector.getHand()
                 if playPause(upCount, fingersUp, spotify): pass
                 elif playNext(upCount, fingersUp, spotify): pass
                 elif playPrevious(upCount, fingersUp, spotify): pass

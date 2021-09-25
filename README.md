@@ -18,8 +18,8 @@ Spotify Gestures is a simple program that allows you to carry out basic function
     - With all 5 fingers up, flick middle finger down to Play/Pause
     - With all 5 fingers up, flick ring finger down to lower volume
     - With all 5 fingers up, flick index finger down to increase volume
-    - Hold three fingers up (Index, Middle, Ring) to skip to previous track
-    - Hold two fingers up (Index, Middle) to skip to next track
+    - Hold twp fingers up (Index, Middle) to skip to previous track
+    - Hold one fingers up (Index) to skip to next track
 3. Navigate to the camera window and press "q" to quit the program
 
 ## Note
