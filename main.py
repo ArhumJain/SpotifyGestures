@@ -22,6 +22,7 @@ def volume(upCount, fingersUp, spotify):
 
 def playNext(upCount, fingersUp, spotify):
     if upCount == 2 and fingersUp[1] == 1 and fingersUp[2] == 1:
+        print("Skipping to next song")
         spotify.playNext()
         time.sleep(0.2)
         return True
@@ -29,6 +30,7 @@ def playNext(upCount, fingersUp, spotify):
 
 def playPrevious(upCount, fingersUp, spotify):
     if upCount == 3 and fingersUp[1] == 1 and fingersUp[2] == 1 and fingersUp[3] == 1:
+        print("Skipping to previous song")
         spotify.playPrevious()
         time.sleep(0.2)
         return True
@@ -65,8 +67,11 @@ def main():
                 elif playPrevious(upCount, fingersUp, spotify): pass
                 elif volume(upCount, fingersUp, spotify): pass
             
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        cv2.imshow("Spotify Gestures", img)
+        if cv2.waitKey(1) == ord('x'):
+            break
+    capture.release()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: VARS = json.load(f)
