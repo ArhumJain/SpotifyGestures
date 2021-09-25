@@ -4,7 +4,6 @@ import json
 from src.TokenValidator import *
 
 def main():
-    validator = TokenValidator()
     path = os.path.join(os.getcwd(), "data", "VARS.json")
     
     with open(path, "r+") as f:
@@ -32,12 +31,15 @@ def main():
         data["SCREEN_WIDTH"] = SCREEN_WIDTH
         data["SCREEN_HEIGHT"] = SCREEN_HEIGHT
         
-        validator.refresh()
-
-        print(".................")
-        print("Set up complete. You can now run main.py to run the program.") 
+        
     with open(path, "w") as f:
         json.dump(data, f)
+    
+    validator = TokenValidator()
+    validator.refresh()
+
+    print(".................")
+    print("Set up complete. You can now run main.py to run the program.") 
 
         
 if __name__ == "__main__":
