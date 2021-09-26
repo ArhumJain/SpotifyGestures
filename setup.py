@@ -5,7 +5,7 @@ from src.TokenValidator import *
 from screeninfo import get_monitors
 
 def main():
-    path = os.path.join(os.getcwd(), "data", "VARS.json")
+    path = os.path.join(__file__, "data", "VARS.json")
     
     with open(path, "r+") as f:
         data = json.loads(f.read())

@@ -2,7 +2,7 @@ import json
 import os
 import requests
 
-with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: VARS = json.load(f)
+with open(os.path.join(__file__, "data", "VARS.json"), "r") as f: VARS = json.load(f)
 for var in VARS.keys():
     if VARS[var] == "":
         raise Exception(f"Must set string value for data variable {var} in data/VARS.json")

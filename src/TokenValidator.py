@@ -6,11 +6,11 @@ import asyncio
 
 class TokenValidator():    
     def __init__(self):
-        with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: self.VARS = json.load(f)
+        with open(os.path.join(__file__, "data", "VARS.json"), "r") as f: self.VARS = json.load(f)
 
         self.BASE_URL = "api.spotify.com"
         self.USER_AGENT = self.VARS["USER_AGENT"]
-        self.FILE_PATH = os.path.join(os.getcwd(), "data", "OAuth.json")
+        self.FILE_PATH = os.path.join(__file__, "data", "OAuth.json")
 
         with open(self.FILE_PATH, "r") as f:
             self.cache = json.load(f)

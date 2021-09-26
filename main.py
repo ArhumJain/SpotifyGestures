@@ -62,8 +62,6 @@ def main():
             area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]) // 100
             if area > 150:
                 fingersUp, upCount = detector.fingersUp()
-                # print(fingersUp)
-                # detector.getHand()
                 if playPause(upCount, fingersUp, spotify): pass
                 elif playNext(upCount, fingersUp, spotify): pass
                 elif playPrevious(upCount, fingersUp, spotify): pass
@@ -76,7 +74,7 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    with open(os.path.join(os.getcwd(), "data", "VARS.json"), "r") as f: VARS = json.load(f)
+    with open(os.path.join(__file__, "data", "VARS.json"), "r") as f: VARS = json.load(f)
     if VARS["SPOTIFY_USER"] == "" or VARS["SPOTIFY_PWD"] == "" or VARS["USER_AGENT"] == "" or VARS["SCREEN_WIDTH"] == "" or VARS["SCREEN_HEIGHT"] == "":
         print("Please run setup.py as program data has not been initialized")
     else:
