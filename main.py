@@ -74,7 +74,7 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    with open(os.path.join(__file__, "data", "VARS.json"), "r") as f: VARS = json.load(f)
+    with open(os.path.join(os.path.dirname(__file__), "data", "VARS.json"), "r") as f: VARS = json.load(f)
     if VARS["SPOTIFY_USER"] == "" or VARS["SPOTIFY_PWD"] == "" or VARS["USER_AGENT"] == "" or VARS["SCREEN_WIDTH"] == "" or VARS["SCREEN_HEIGHT"] == "":
         print("Please run setup.py as program data has not been initialized")
     else:
