@@ -27,4 +27,7 @@ Spotify Gestures is a simple program that allows you to carry out basic function
 - This project works best with a clear background from which the hand only enters the frame when conducting gestures *for* Spotify Gestures *(I recommend tilting your webcam up towards the ceiling)*
 - Make sure you have a spotify device active (e.g. Web Player is online or the Spotify App is running)
 
+## [Demo](https://youtu.be/py-RbKaSraQ)
+
+
 ### *I hope you enjoy using Spotify Gestures! Feel free to report any issues (Or ask for features) or submit pull requests to improve this project*
